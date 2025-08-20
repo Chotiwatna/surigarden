@@ -1,0 +1,118 @@
+:root{
+  --brand:#3c5537;
+  --brand-dark:#2f432b;
+  --beige:#f6efdf;
+  --text:#223;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+   margin:0;
+   font-family: system-ui, -apple-system, "Noto Sans Thai", "Segoe UI", Roboto, Arial, sans-serif;
+   color:var(--text);
+   background:var(--beige);   /* <-- ทำให้พื้นหลังทั้งหน้ากลายเป็นสีครีม */
+}
+
+
+
+/* แถบสีด้านบน */
+.topbar{
+  background:var(--brand);
+  color:#fff;
+  height:52px;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  position:sticky;
+  top:0;
+  z-index:40;
+}
+
+/* ===== Navbar ใหม่ ===== */
+.header{
+  position: sticky;      /* ทำให้ติดบนสุดตอนสกรอลล์ */
+  top: 0;
+  left: 0; right: 0;
+  padding: 8px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--brand);        /* สีเขียวเหมือนแทบเดิม */
+  z-index: 1000;                   /* ให้อยู่เหนือฮีโร่/รูป */
+}
+
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand img{ height:28px; width:auto; display:block; }
+.brandName{ color:#fff; font-weight:800; letter-spacing:.2px; text-shadow:0 2px 6px rgba(0,0,0,.3); }
+
+/* กล่องเมนูด้านขวา */
+.navMenu ul{
+  display:flex; gap:18px; list-style:none; margin:0;
+  padding:10px 14px;
+  background:rgba(60,85,55,.92);
+  color:#fff; border-radius:10px;
+}
+.navMenu li{ position:relative; }
+.navMenu a{ color:#fff; text-decoration:none; font-weight:600; font-size:14px; }
+.navMenu a:hover{ opacity:.9 }
+
+/* Dropdown */
+.dropdown{
+  position:absolute; top:100%; right:0;
+  background:#f6f6f6; color:#222;
+  min-width:210px; border-radius:10px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  overflow:hidden; display:none; z-index:100;
+}
+.hasDropdown:hover > .dropdown{ display:block; }
+.dropdown a{
+  display:block; padding:10px 12px; border-bottom:1px solid #eaeaea; color:#2a2a2a;
+  font-weight:500; font-size:14px;
+}
+.dropdown a:last-child{ border-bottom:none; }
+.dropdown a:hover{ background:#f0f0f0; }
+
+/* ===== Hero ===== */
+.hero{ position:relative; height:520px; width:100%; overflow:hidden; }
+.hero img{ width:100%; height:100%; object-fit:cover; display:block; }
+.heroOverlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35)); z-index:1; }
+.heroContent{ position:absolute; left:60px; bottom:48px; color:#fff; max-width:560px; z-index:2; }
+.heroTitle{ font-size:52px; line-height:1.05; margin:0 0 8px; font-weight:900; text-shadow:0 3px 8px rgba(0,0,0,.35); }
+.heroSubtitle{ font-size:20px; line-height:1.5; margin:0 0 18px; text-shadow:0 2px 6px rgba(0,0,0,.3); }
+.heroBtn{ background:#f4f0e2; color:#333; border:none; border-radius:999px; padding:10px 18px; font-weight:700; cursor:pointer; }
+
+/* ===== Section & “ดูทั้งหมด” ===== */
+.section{ background:var(--beige); padding:42px 22px 36px; }
+.container{ max-width:1100px; margin:0 auto; }
+.sectionHeader{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
+.h2{ color:#7f4a2e; font-size:22px; font-weight:900; margin:0; }
+.sub{ color:#5e5e5e; font-size:14px; margin:6px 0 0; }
+
+.linkAll{
+  display:inline-flex; align-items:center; gap:6px;
+  color:#7f4a2e; font-weight:800; text-decoration:none;
+  padding:8px 10px; border-radius:8px;
+}
+.linkAll:hover{ background:#eadfc8; }
+
+/* ===== Grids ===== */
+.grid{ margin-top:22px; display:grid; grid-template-columns:1fr 1fr; grid-gap:22px;margin-bottom:28px; }
+.grid img{ width:100%; height:350px; object-fit:cover; border-radius:10px; display:block; }
+
+/* ===== Full width room image ===== */
+.roomShot{ margin:36px auto 120px; max-width:1000px; border-radius:10px; overflow:hidden; }
+.roomShot img{ width:100%; height:auto; display:block; }
+
+/* ===== Footer ===== */
+.footer{ background:var(--brand-dark); color:#f0f0f0; padding:28px 22px; }
+.footer .container{ font-size:14px; line-height:1.7; text-align:center; }
+
+/* Responsive */
+@media (max-width: 900px){
+  .hero{ height:440px }
+  .heroContent{ left:24px; bottom:28px }
+  .heroTitle{ font-size:38px }
+  .heroSubtitle{ font-size:16px }
+  .grid{ grid-template-columns:1fr; }
+  .brandName{ display:none; } 
+  .roomShot{ margin:24px auto 90px; }         /* ย่อชื่อบนจอเล็ก */
+}
