@@ -1,118 +1,138 @@
 :root{
-  --brand:#3c5537;
-  --brand-dark:#2f432b;
-  --beige:#f6efdf;
-  --text:#223;
+  --brand:#3c5537;             /* แถบล่าง */
+  --line:#e9e9e9;
+  --text:#222;
+
+  --accent-500:#7b914f;        /* ปุ่มจองเลย (เขียวเข้ม) */
+  --accent-700:#a7bf76;        /* สีตอน hover (เขียวอ่อน) */
+
+  --container-w:1140px;
+  --radius:12px;
+  --shadow:0 10px 26px rgba(0,0,0,.08);
 }
 
 *{box-sizing:border-box}
 html,body,#root{height:100%}
 body{
-   margin:0;
-   font-family: system-ui, -apple-system, "Noto Sans Thai", "Segoe UI", Roboto, Arial, sans-serif;
-   color:var(--text);
-   background:var(--beige);   /* <-- ทำให้พื้นหลังทั้งหน้ากลายเป็นสีครีม */
+  margin:0;
+  font-family:system-ui,-apple-system,"Noto Sans Thai","Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:#fff;
 }
 
-
-
-/* แถบสีด้านบน */
-.topbar{
-  background:var(--brand);
-  color:#fff;
-  height:52px;
-  display:flex;
-  align-items:center;
-  padding:0 20px;
-  position:sticky;
-  top:0;
-  z-index:40;
-}
-
-/* ===== Navbar ใหม่ ===== */
+/* ===== Header ขาว (sticky) ===== */
 .header{
-  position: sticky;      /* ทำให้ติดบนสุดตอนสกรอลล์ */
-  top: 0;
-  left: 0; right: 0;
-  padding: 8px 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--brand);        /* สีเขียวเหมือนแทบเดิม */
-  z-index: 1000;                   /* ให้อยู่เหนือฮีโร่/รูป */
+  position:sticky; top:0; z-index:1000;
+  background:#fff; border-bottom:1px solid var(--line);
+  overflow:visible;                 /* กันโลโก้ที่ขยายไม่ให้ถูกตัด */
 }
+.container{ max-width:var(--container-w); margin:0 auto; padding:0 24px; }
+.headerRow{ display:flex; align-items:center; gap:16px; padding:10px 0; }
 
-.brand{ display:flex; align-items:center; gap:10px; }
-.brand img{ height:28px; width:auto; display:block; }
-.brandName{ color:#fff; font-weight:800; letter-spacing:.2px; text-shadow:0 2px 6px rgba(0,0,0,.3); }
-
-/* กล่องเมนูด้านขวา */
-.navMenu ul{
-  display:flex; gap:18px; list-style:none; margin:0;
-  padding:10px 14px;
-  background:rgba(60,85,55,.92);
-  color:#fff; border-radius:10px;
+.brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+/* โลโก้ใหญ่ขึ้น แต่ความสูงแถบไม่เพิ่ม (ใช้ scale) */
+.brand img{
+  height:55px;                      /* ขนาดที่ใช้คำนวณ layout (คงเดิม) */
+  transform:scale(1.25);            /* ขยายให้ดูใหญ่ขึ้น ปรับได้ 1.1–1.5 */
+  transform-origin:left center;     /* ขยายจากด้านซ้ายให้จัดแนวสวย */
+  display:block;
 }
+.brandText{ font-weight:800; color:#1e1e1e; }
+
+/* ขยับกล่องค้นหาไปทางขวา และกำหนดความกว้าง */
+.searchBar{
+  flex:0 1 560px; max-width:560px;
+  margin-left:auto; margin-right:16px;
+  display:flex; align-items:center;
+  background:#fff; border:1px solid var(--line); border-radius:999px; overflow:hidden;
+}
+.searchBar input{ flex:1; border:0; outline:none; padding:10px 14px; font-size:14px; background:transparent; }
+.searchBar button{ border:0; background:transparent; padding:0 12px; cursor:pointer; color:#666; }
+.searchBar button:hover{ color:#333; }
+
+.navMenu{ margin-left:auto; }
+.navMenu ul{ display:flex; gap:18px; list-style:none; margin:0; padding:0; }
+.navMenu a{ color:#1e1e1e; text-decoration:none; font-weight:600; font-size:14px; }
+.navMenu a:hover{ color:var(--accent-700); }
 .navMenu li{ position:relative; }
-.navMenu a{ color:#fff; text-decoration:none; font-weight:600; font-size:14px; }
-.navMenu a:hover{ opacity:.9 }
 
-/* Dropdown */
+/* ===== Dropdown (สไตล์ตามภาพ + ชิดเมนู ไม่หลุด hover) ===== */
 .dropdown{
   position:absolute; top:100%; right:0;
-  background:#f6f6f6; color:#222;
-  min-width:210px; border-radius:10px;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
-  overflow:hidden; display:none; z-index:100;
+  background:#fff; border:1px solid var(--line);
+  min-width:230px; border-radius:10px; box-shadow:0 10px 25px rgba(0,0,0,.12);
+  padding:0; overflow:hidden; display:none; z-index:1100;
 }
-.hasDropdown:hover > .dropdown{ display:block; }
+.hasDropdown:hover > .dropdown,
+.hasDropdown:focus-within > .dropdown{ display:block; }
+
+/* “สะพาน” โปร่งใส 8px ใต้แท็บเวลา hover เพื่อกันหลุด */
+.hasDropdown:hover::after{
+  content:""; position:absolute; left:0; right:0; top:100%; height:8px;
+}
+
 .dropdown a{
-  display:block; padding:10px 12px; border-bottom:1px solid #eaeaea; color:#2a2a2a;
-  font-weight:500; font-size:14px;
+  display:block; padding:12px 14px; background:#fff; color:#222;
+  text-decoration:none; font-weight:600; font-size:14px;
+  border-bottom:1px solid var(--line);
 }
 .dropdown a:last-child{ border-bottom:none; }
-.dropdown a:hover{ background:#f0f0f0; }
+.dropdown a:hover{ background:var(--accent-700); color:#222; }
 
 /* ===== Hero ===== */
-.hero{ position:relative; height:520px; width:100%; overflow:hidden; }
+.hero{ position:relative; height:520px; overflow:hidden; }
 .hero img{ width:100%; height:100%; object-fit:cover; display:block; }
 .heroOverlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35)); z-index:1; }
 .heroContent{ position:absolute; left:60px; bottom:48px; color:#fff; max-width:560px; z-index:2; }
-.heroTitle{ font-size:52px; line-height:1.05; margin:0 0 8px; font-weight:900; text-shadow:0 3px 8px rgba(0,0,0,.35); }
+.heroTitle{ font-size:52px; margin:0 0 8px; font-weight:900; text-shadow:0 3px 8px rgba(0,0,0,.35); }
 .heroSubtitle{ font-size:20px; line-height:1.5; margin:0 0 18px; text-shadow:0 2px 6px rgba(0,0,0,.3); }
-.heroBtn{ background:#f4f0e2; color:#333; border:none; border-radius:999px; padding:10px 18px; font-weight:700; cursor:pointer; }
-
-/* ===== Section & “ดูทั้งหมด” ===== */
-.section{ background:var(--beige); padding:42px 22px 36px; }
-.container{ max-width:1100px; margin:0 auto; }
-.sectionHeader{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
-.h2{ color:#7f4a2e; font-size:22px; font-weight:900; margin:0; }
-.sub{ color:#5e5e5e; font-size:14px; margin:6px 0 0; }
-
-.linkAll{
-  display:inline-flex; align-items:center; gap:6px;
-  color:#7f4a2e; font-weight:800; text-decoration:none;
-  padding:8px 10px; border-radius:8px;
+.heroBtn{
+  background:var(--accent-500);
+  color:#fff; border:1px solid var(--accent-700);
+  border-radius:10px; padding:12px 20px; font-weight:800; cursor:pointer; transition:all .15s ease;
 }
-.linkAll:hover{ background:#eadfc8; }
+.heroBtn:hover{ background:var(--accent-700); border-color:var(--accent-700); transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.18); }
 
-/* ===== Grids ===== */
-.grid{ margin-top:22px; display:grid; grid-template-columns:1fr 1fr; grid-gap:22px;margin-bottom:28px; }
-.grid img{ width:100%; height:350px; object-fit:cover; border-radius:10px; display:block; }
+/* ===== Sections (พื้นขาวแบบภาพ) ===== */
+.section{ background:#fff; padding:56px 0; }
+.section--noTopPad{ padding-top:0; }
+.sectionHeader{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px; }
+.h2{ font-size:24px; font-weight:900; margin:0; color:#2b2b2b; }
+.sub{ color:#6b6b6b; font-size:14px; margin:6px 0 0; }
+.linkAll{ color:#6b6b6b; text-decoration:none; font-weight:600; }
+.linkAll:hover{ color:#333; text-decoration:underline; }
 
-/* ===== Full width room image ===== */
-.roomShot{ margin:36px auto 120px; max-width:1000px; border-radius:10px; overflow:hidden; }
+/* รูปคู่ */
+.grid{ margin-top:10px; display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:32px; }
+.grid img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:var(--radius); box-shadow:var(--shadow); display:block; }
+
+/* รูปห้องด้านล่าง */
+.roomShot{ border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
 .roomShot img{ width:100%; height:auto; display:block; }
 
-/* ===== Footer ===== */
-.footer{ background:var(--brand-dark); color:#f0f0f0; padding:28px 22px; }
-.footer .container{ font-size:14px; line-height:1.7; text-align:center; }
+/* ===== ติดต่อเรา ===== */
+.contact{ background:#fff; border-top:1px solid var(--line); padding:36px 0 48px; }
+.contactTitle{ margin:0 0 14px; font-size:16px; font-weight:800; }
+.contactList{ margin:0; padding:0; list-style:none; display:grid; gap:12px; }
+.contactList li{ display:flex; gap:10px; align-items:flex-start; color:#444; }
+.ic{ width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; color:var(--accent-700); }
+.ic svg{ width:18px; height:18px; fill:currentColor; }
+
+/* ===== Bottom bar ===== */
+.bottomBar{ background:var(--brand); color:#eef0eb; padding:18px 0; }
+.bottomBar .container{ text-align:center; font-size:14px; }
 
 /* Responsive */
-@media (max-width: 900px){
-  .hero{ height:440px }
-  .heroContent{ left:24px; bottom:28px }
-  .heroTitle{ font-size:38px }
-  .heroSubtitle{ font-size:16px }
-  .grid{ grid-template-columns:1fr; }
-  .brandName{ display:none; } 
-  .roomShot{ margin:24px auto 90px; }         /* ย่อชื่อบนจอเล็ก */
+@media (max-width:900px){
+  .brand img{
+    height:32px;
+    transform:scale(1.15);      /* ลดสเกลบนจอเล็ก */
+  }
+  .searchBar{ display:none; }
+  .hero{ height:440px; }
+  .heroContent{ left:24px; bottom:28px; }
+  .heroTitle{ font-size:38px; }
+  .heroSubtitle{ font-size:16px; }
+  .grid{ grid-template-columns:1fr; gap:20px; }
+  .section{ padding:32px 0; }
 }
