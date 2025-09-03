@@ -39,7 +39,6 @@ export default function Navbar(){
             </li>
 
             <li><a href="#">สิ่งอำนวยความสะดวก</a></li>
-            <li><a href="#">ผู้ดูแลระบบ</a></li>
           </ul>
         </nav>
       </div>
