@@ -42,15 +42,15 @@
 .table .tHead > :first-child{ padding-left:30px; }
 .table .tRow  > :first-child{ padding-left:2px; }
 
-/* คอลัมน์ “ประเภท” ขยับเข้าให้ตรงหัว */
+/* คอลัมน์ “ประเภท” 
 .table .tHead .typeCol{ padding-left:130px; }
 .table .tRow  .typeCol{ padding-left:120px; }
 
-/* คอลัมน์ “ราคา/คืน” ชิดขวาให้หัว/ข้อมูลตรงกัน */
+/* คอลัมน์ “ราคา/คืน” 
 .table .tHead .priceCol{ text-align:right; padding-right:48px; }
 .table .tRow  .priceCol{ text-align:right; padding-right:48px; }
 
-/* แถวคลิก/โฮเวอร์เพื่อแก้ไขได้ */
+
 .rowClickable{ cursor:pointer; transition:background .15s ease; }
 .rowClickable:hover{ background:#f6f9ea; }
 

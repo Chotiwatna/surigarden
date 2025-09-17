@@ -1,3 +1,4 @@
+// src/App.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar.jsx";
@@ -11,7 +12,10 @@ import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import AdminRooms from "./pages/AdminRooms.jsx";
-import AdminBookings from "./pages/AdminBookings.jsx"; 
+import AdminBookings from "./pages/AdminBookings.jsx";
+
+
+import HomeFull from "./pages/HomeFull.jsx";
 
 function PublicHome() {
   return (
@@ -28,12 +32,21 @@ function PublicHome() {
 export default function App() {
   return (
     <Routes>
+      
       <Route path="/" element={<PublicHome />} />
+
+      <Route path="/home" element={
+        <>
+          <Navbar />
+          <HomeFull />
+          <Footer />
+        </>
+      } />
 
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<ProtectedRoute />}>
         <Route element={<AdminLayout />}>
-          <Route index element={<AdminRooms />} />        {/* ค่าเริ่มต้น */}
+          <Route index element={<AdminRooms />} />
           <Route path="rooms" element={<AdminRooms />} />
           <Route path="bookings" element={<AdminBookings />} />
         </Route>

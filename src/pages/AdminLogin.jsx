@@ -12,11 +12,11 @@ export default function AdminLogin() {
   async function onSubmit(e) {
     e.preventDefault();
 
-    // TODO: เปลี่ยนเป็นเรียก API จริงของคุณ
+    
     const ok = form.email === "admin@example.com" && form.password === "123456";
     if (!ok) return setError("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
 
-    // เดโม: เก็บ token ไว้ก่อน (ของจริงควรใช้ httpOnly cookie)
+    
     localStorage.setItem("admin_token", "demo-token");
     navigate("/admin", { replace: true });
   }

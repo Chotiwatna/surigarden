@@ -1,29 +1,36 @@
-import React from 'react'
-import logo from '../assets/logo.jpg'
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import logo from "../assets/logo.jpg";
 
-export default function Navbar(){
-  const onSearch = (e)=>{ e.preventDefault() }
+export default function Navbar() {
+  const onSearch = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <header className="header">
       <div className="container headerRow">
-        <a className="brand" href="#">
+        {/* โลโก้ -> หน้า Landing เดิม (/) */}
+        <Link className="brand" to="/">
           <img src={logo} alt="Suree Garden Resort" />
-        </a>
+        </Link>
 
         <form className="searchBar" role="search" onSubmit={onSearch}>
           <input placeholder="ตรวจสอบสถานะวันจองหรือค้นหาการจอง" />
           <button type="submit" aria-label="ค้นหา">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
-              <path d="M20 20L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+              <path d="M20 20L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
         </form>
 
         <nav className="navMenu" aria-label="เมนูหลัก">
           <ul>
-            <li><a href="#">หน้าแรก</a></li>
+            
+            <li>
+              <NavLink to="/home">หน้าแรก</NavLink>
+            </li>
 
             <li className="hasDropdown">
               <a href="#">ห้องพัก ▾</a>
@@ -38,10 +45,12 @@ export default function Navbar(){
               </div>
             </li>
 
-            <li><a href="#">สิ่งอำนวยความสะดวก</a></li>
+            <li>
+              <a href="#">สิ่งอำนวยความสะดวก</a>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
-  )
+  );
 }

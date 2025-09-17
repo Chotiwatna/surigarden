@@ -1,4 +1,3 @@
-// src/pages/AdminRooms.jsx
 import { useEffect, useMemo, useState } from "react";
 import roomA from "../assets/room.jpg";
 import pond from "../assets/pond.jpg";
@@ -34,11 +33,11 @@ const ROOM_TYPES = [
   "Standard Villa",
 ];
 
-/* ===== helper: แปลงไฟล์ -> data URL เพื่อเก็บถาวร ===== */
+
 const fileToDataURL = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = (e) => resolve(e.target.result);   // data URL string
+    reader.onload = (e) => resolve(e.target.result);  
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
@@ -47,17 +46,15 @@ export default function AdminRooms() {
   const [rooms, setRooms] = useState(seedRooms);
   const [filter, setFilter] = useState("all");
 
-  // ===== modal state =====
-  const [editing, setEditing] = useState(null); // object ของห้องที่กำลังแก้ไข
+  
+  const [editing, setEditing] = useState(null); 
   const [form, setForm] = useState(emptyForm());
-  const [previews, setPreviews] = useState([]); // ไฟล์ใหม่ที่เพิ่งเลือก: [{file, url}]
+  const [previews, setPreviews] = useState([]); 
 
   useEffect(() => {
-    // TODO: โหลดจาก API จริง
-    // fetch('/api/rooms').then(r => r.json()).then(setRooms);
   }, []);
 
-  // กรองรายการ
+  
   const view = useMemo(() => {
     if (filter === "all") return rooms;
     return rooms.filter(r =>
@@ -65,7 +62,7 @@ export default function AdminRooms() {
     );
   }, [rooms, filter]);
 
-  // เปิด modal + เติม form
+  
   const openEdit = (room) => {
     setEditing(room);
     setForm({
@@ -77,21 +74,21 @@ export default function AdminRooms() {
       price: String(room.price),
       status: room.status,
       facilities: room.facilities || {},
-      images: room.images || [],        // รูปเดิม
+      images: room.images || [],       
     });
-    setPreviews([]);                    // เคลียร์รูปใหม่
+    setPreviews([]);                   
   };
 
   const closeModal = () => {
     setEditing(null);
-    // revoke url ของพรีวิวก่อนปิด
+    
     setPreviews(prev => {
       prev.forEach(p => { try { URL.revokeObjectURL(p.url); } catch {} });
       return [];
     });
   };
 
-  // ปิดสกรอลพื้นหลังตอนเปิด modal + esc เพื่อปิด
+  
   useEffect(() => {
     if (!editing) return;
     document.body.style.overflow = "hidden";
@@ -103,7 +100,7 @@ export default function AdminRooms() {
     };
   }, [editing]);
 
-  // เพิ่มห้อง (เดโม่)
+  
   const onAdd = () => {
     const newRoom = {
       id: Date.now(),
@@ -118,13 +115,13 @@ export default function AdminRooms() {
     setRooms(prev => [newRoom, ...prev]);
   };
 
-  // ลบห้อง
+  
   const onDelete = (id) => {
     if (!confirm("ลบห้องนี้?")) return;
     setRooms(prev => prev.filter(r => r.id !== id));
   };
 
-  // ===== form utils =====
+  
   function emptyForm() {
     return {
       id: null,
@@ -135,7 +132,7 @@ export default function AdminRooms() {
       price: "0",
       status: "vacant",
       facilities: {},
-      images: [], // รูปเดิม
+      images: [], 
     };
   }
 
@@ -144,14 +141,14 @@ export default function AdminRooms() {
   const toggleFacility = (key) =>
     setForm(f => ({ ...f, facilities: { ...f.facilities, [key]: !f?.facilities?.[key] } }));
 
-  // เลือกไฟล์หลายไฟล์ (รูปใหม่)
+  
   const onPickFiles = (e) => {
     const files = Array.from(e.target.files || []);
     const urls = files.map(f => ({ file: f, url: URL.createObjectURL(f) }));
     setPreviews(prev => [...prev, ...urls]);
   };
 
-  // ลบ "รูปใหม่ (พรีวิว)"
+  
   const removePreview = (idx) => {
     setPreviews(prev => {
       const arr = [...prev];
@@ -161,7 +158,7 @@ export default function AdminRooms() {
     });
   };
 
-  // ลบ "รูปเดิม"
+  
   const removeOldImage = (idx) => {
     setForm(f => {
       const imgs = (f.images || []).filter((_, i) => i !== idx);
@@ -169,9 +166,9 @@ export default function AdminRooms() {
     });
   };
 
-  // บันทึก (แปลงไฟล์พรีวิวเป็น data URL ก่อน)
+  
   const onSave = async () => {
-    // แปลงไฟล์ใหม่ทั้งหมดเป็น data URL เพื่อเก็บถาวร
+    
     const uploadedDataUrls = await Promise.all(
       previews.map(p => fileToDataURL(p.file))
     );
@@ -180,13 +177,13 @@ export default function AdminRooms() {
       ...form,
       capacity: Number(form.capacity || 0),
       price: Number(form.price || 0),
-      // รวมรูปเดิม (หลังจากอาจลบบางรูป) + รูปใหม่ที่เพิ่งแปลง
+      
       images: [ ...(form.images || []), ...uploadedDataUrls ],
     };
 
     setRooms(prev => prev.map(r => (r.id === form.id ? patched : r)));
 
-    // เก็บกวาด objectURL ชั่วคราว
+    
     previews.forEach(p => { try { URL.revokeObjectURL(p.url); } catch {} });
     setPreviews([]);
     closeModal();
@@ -213,7 +210,7 @@ export default function AdminRooms() {
         </div>
       </div>
 
-      {/* ===== ตารางห้อง ===== */}
+      
       <div className="card table">
         <div className="tHead">
           <div>ห้อง</div>
@@ -253,7 +250,7 @@ export default function AdminRooms() {
         ))}
       </div>
 
-      {/* ===== MODAL แก้ไข ===== */}
+      
       {editing && (
         <div className="modalOverlay" onClick={closeModal}>
           <div className="modalCard" role="dialog" aria-modal="true" onClick={(e)=>e.stopPropagation()}>
@@ -324,7 +321,7 @@ export default function AdminRooms() {
                 </div>
               </div>
 
-              {/* รูปเดิม + พรีวิวรูปใหม่ */}
+              
               <div className="modalGallery">
                 <div className="gTitle">รูปเดิม</div>
                 <div className="galleryGrid">
