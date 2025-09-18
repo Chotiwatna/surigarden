@@ -4,11 +4,11 @@ import pond from "../assets/pond.jpg";
 import veranda from "../assets/veranda.jpg";
 
 const seedRooms = [
-  { id: 0, number: "0", detail: "เตียงใหญ่ + เตียงเล็ก", capacity: 3, type: "Deluxe Triple", price: 650, status: "vacant", images: [pond] },
-  { id: 1, number: "1", detail: "เตียงเดี่ยว 1 เตียง",     capacity: 2, type: "Deluxe Double",     price: 550, status: "vacant", images: [veranda] },
-  { id: 2, number: "2", detail: "เตียงเล็ก 2 เตียง",        capacity: 2, type: "Deluxe Twin",       price: 550, status: "occupied", images: [roomA] },
-  { id: 3, number: "3", detail: "เตียงเดี่ยว 1 เตียง",     capacity: 2, type: "Deluxe Double",     price: 550, status: "vacant", images: [roomA] },
-  { id: 4, number: "4", detail: "เตียงเดี่ยว 1 เตียง",     capacity: 2, type: "Deluxe Double",     price: 550, status: "vacant", images: [veranda] },
+  { id: 0, number: "0", detail: "เตียงใหญ่ + เตียงเล็ก",  capacity: 3, type: "ห้องดีลักซ์สำหรับ 3 ท่าน", price: 650, status: "vacant", images: [pond] },
+  { id: 1, number: "1", detail: "เตียงเดี่ยว 1 เตียง",     capacity: 2, type: "ห้องดีลักซ์เตียงใหญ่",     price: 550, status: "vacant", images: [veranda] },
+  { id: 2, number: "2", detail: "เตียงเล็ก 2 เตียง",      capacity: 2, type: "ห้องดีลักซ์เตียงแฝด",     price: 550, status: "occupied", images: [roomA] },
+  { id: 3, number: "3", detail: "เตียงเดี่ยว 1 เตียง",     capacity: 2, type: "ห้องดีลักซ์เตียงใหญ่",     price: 550, status: "vacant", images: [roomA] },
+  { id: 4, number: "4", detail: "เตียงเดี่ยว 1 เตียง",     capacity: 2, type: "ห้องดีลักซ์เตียงใหญ่",     price: 550, status: "vacant", images: [veranda] },
 ];
 
 const FACILITY_LIST = [
@@ -24,13 +24,13 @@ const FACILITY_LIST = [
 ];
 
 const ROOM_TYPES = [
-  "Deluxe Double",
-  "Premier Double Room",
-  "Deluxe Twin",
-  "Superior Double Room",
-  "Deluxe Triple",
-  "Family Suite",
-  "Standard Villa",
+  "ห้องดีลักซ์เตียงใหญ่",
+  "ห้องพรีเมียมเตียงใหญ่",
+  "ห้องดีลักซ์เตียงแฝด",
+  "ซูพีเรีย เตียงใหญ่",
+  "ห้องดีลักซ์สำหรับ 3 ท่าน",
+  "ห้องพักบ้านเดี่ยว",
+  "ห้องพักสำหรับครอบครัว",
 ];
 
 

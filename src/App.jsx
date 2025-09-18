@@ -14,8 +14,8 @@ import AdminLayout from "./layouts/AdminLayout.jsx";
 import AdminRooms from "./pages/AdminRooms.jsx";
 import AdminBookings from "./pages/AdminBookings.jsx";
 
-
 import HomeFull from "./pages/HomeFull.jsx";
+import RoomType from "./pages/RoomType.jsx";
 
 function PublicHome() {
   return (
@@ -43,6 +43,9 @@ export default function App() {
         </>
       } />
 
+      <Route path="/" element={<PublicHome />} />
+      <Route path="/rooms/:slug" element={<RoomType />} />
+      
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<ProtectedRoute />}>
         <Route element={<AdminLayout />}>

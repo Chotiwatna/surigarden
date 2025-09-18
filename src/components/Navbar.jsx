@@ -10,10 +10,10 @@ export default function Navbar() {
   return (
     <header className="header">
       <div className="container headerRow">
-        {/* โลโก้ -> หน้า Landing เดิม (/) */}
-        <Link className="brand" to="/">
+        
+        <NavLink className="brand" to="/">
           <img src={logo} alt="Suree Garden Resort" />
-        </Link>
+        </NavLink>
 
         <form className="searchBar" role="search" onSubmit={onSearch}>
           <input placeholder="ตรวจสอบสถานะวันจองหรือค้นหาการจอง" />
@@ -35,18 +35,18 @@ export default function Navbar() {
             <li className="hasDropdown">
               <a href="#">ห้องพัก ▾</a>
               <div className="dropdown" role="menu">
-                <a href="#">Deluxe Double</a>
-                <a href="#">Premiere Double Room</a>
-                <a href="#">Deluxe Twin</a>
-                <a href="#">Superior Double Room</a>
-                <a href="#">Deluxe Triple</a>
-                <a href="#">Family Suite</a>
-                <a href="#">Standard Villa</a>
+                <NavLink to="/rooms/deluxe-double">ห้องดีลักซ์เตียงใหญ่</NavLink>
+                <NavLink to="/rooms/premier-double">ห้องพรีเมียมเตียงใหญ่</NavLink>
+                <NavLink to="/rooms/deluxe-twin">ห้องดีลักซ์เตียงแฝด</NavLink>
+                <NavLink to="/rooms/superior-double">ซูพีเรีย เตียงใหญ่</NavLink>
+                <NavLink to="/rooms/deluxe-triple">ห้องดีลักซ์สำหรับ 3 ท่าน</NavLink>
+                <NavLink to="/rooms/family-suite">ห้องพักสำหรับครอบครัว</NavLink>
+                <NavLink to="/rooms/standard-villa">ห้องพักบ้านเดี่ยว</NavLink>
               </div>
             </li>
 
             <li>
-              <a href="#">สิ่งอำนวยความสะดวก</a>
+              <a href="#">ห้องจัดเลี้ยง</a>
             </li>
           </ul>
         </nav>
