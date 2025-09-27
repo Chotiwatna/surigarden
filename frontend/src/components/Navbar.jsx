@@ -1,16 +1,14 @@
+// src/components/Navbar.jsx
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 
 export default function Navbar() {
-  const onSearch = (e) => {
-    e.preventDefault();
-  };
+  const onSearch = (e) => e.preventDefault();
 
   return (
     <header className="header">
       <div className="container headerRow">
-        
         <NavLink className="brand" to="/">
           <img src={logo} alt="Suree Garden Resort" />
         </NavLink>
@@ -27,13 +25,15 @@ export default function Navbar() {
 
         <nav className="navMenu" aria-label="เมนูหลัก">
           <ul>
-            
             <li>
               <NavLink to="/home">หน้าแรก</NavLink>
             </li>
 
+            {/* ใช้ button เป็นตัวเปิด dropdown เพื่อไม่ให้นำทาง */}
             <li className="hasDropdown">
-              <a href="#">ห้องพัก ▾</a>
+              <a href="#" className="menuLink" onClick={(e) => e.preventDefault()}>
+                ห้องพัก <span className="caret">▾</span>
+              </a>
               <div className="dropdown" role="menu">
                 <NavLink to="/rooms/deluxe-double">ห้องดีลักซ์เตียงใหญ่</NavLink>
                 <NavLink to="/rooms/premier-double">ห้องพรีเมียมเตียงใหญ่</NavLink>
@@ -45,8 +45,9 @@ export default function Navbar() {
               </div>
             </li>
 
+            {/* ลิงก์ไปหน้าห้องจัดเลี้ยงจริง ๆ */}
             <li>
-              <a href="#">ห้องจัดเลี้ยง</a>
+              <NavLink to="/banquet">ห้องจัดเลี้ยง</NavLink>
             </li>
           </ul>
         </nav>

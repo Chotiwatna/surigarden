@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import hero from '../assets/hero.jpg' 
 
 export default function Hero(){
@@ -12,7 +13,10 @@ export default function Hero(){
           ความเงียบสงบ… คือของขวัญที่แท้จริง<br/>
           สัมผัสบรรยากาศส่วนตัวท่ามกลางธรรมชาติ
         </p>
-        <button className="heroBtn">จองเลย</button>
+        {/* ไปที่หน้ารวม + เริ่มหน้าที่ 1 */}
+        <Link to="/browse?page=1" className="heroBtn" onClick={() => window.scrollTo(0,0)}>
+          จองเลย
+        </Link>
       </div>
     </section>
   )

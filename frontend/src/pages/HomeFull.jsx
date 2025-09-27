@@ -120,6 +120,27 @@ export default function HomeFull() {
           <RoomCard key={r.id} room={r} />
         ))}
       </section>
+
+      {/* Footer (เหมือนเดิม) */}
+        <section className="contact">
+          <div className="container">
+            <h3 className="contactTitle">ติดต่อเรา</h3>
+            <ul className="contactList">
+              <li>
+                <span className="ic" aria-hidden>
+                  <svg viewBox="0 0 24 24"><path d="M12 2C8.7 2 6 4.7 6 8c0 5 6 12 6 12s6-7 6-12c0-3.3-2.7-6-6-6zm0 8.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 5.5 12 5.5 14.5 6.6 14.5 8 13.4 10.5 12 10.5z" fill="currentColor"/></svg>
+                </span>
+                123 หมู่6 ใกล้แยก รร การบิน ถนน บางเลน ตำบล ห้วยขวาง อำเภอกำแพงแสน นครปฐม 73180
+              </li>
+              <li>
+                <span className="ic" aria-hidden>
+                  <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.7 3.9 5.1 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C12.8 21 3 11.2 3 2c0-.6.4-1 1-1h2.4c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8z" fill="currentColor"/></svg>
+                </span>
+                082 466 6689
+              </li>
+            </ul>
+          </div>
+        </section>
     </main>
   );
 }

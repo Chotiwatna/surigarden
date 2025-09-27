@@ -83,11 +83,41 @@ body{
 .heroContent{ position:absolute; left:60px; bottom:48px; color:#fff; max-width:560px; z-index:2; }
 .heroTitle{ font-size:52px; margin:0 0 8px; font-weight:900; text-shadow:0 3px 8px rgba(0,0,0,.35); }
 .heroSubtitle{ font-size:20px; line-height:1.5; margin:0 0 18px; text-shadow:0 2px 6px rgba(0,0,0,.3); }
+/* ===== Public Hero ===== */
+/* ...ส่วนอื่นคงเดิม... */
+
 .heroBtn{
   background:var(--accent-500);
-  color:#fff; border:1px solid var(--accent-700);
-  border-radius:10px; padding:12px 20px; font-weight:800; cursor:pointer; transition:all .15s ease;
+  color:#fff;
+  border:1px solid var(--accent-700);
+  border-radius:10px;
+  padding:12px 20px;
+  font-weight:800;
+  cursor:pointer;
+  transition:all .15s ease;
+
+  /* กันเส้นใต้เวลาเป็นลิงก์ด้วย */
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
 }
+.heroBtn:hover,
+.heroBtn:focus{
+  background:var(--accent-700);
+  border-color:var(--accent-700);
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+  text-decoration:none;            /* ย้ำกันเบราว์เซอร์ใส่ underline ตอน hover */
+}
+
+/* เผื่อกรณีใช้ <Link> หรือ <a class="heroBtn"> */
+a.heroBtn,
+a.heroBtn:hover,
+a.heroBtn:focus,
+a.heroBtn:visited{
+  text-decoration:none;
+  color:#fff;
+}
+
 .heroBtn:hover{ background:var(--accent-700); border-color:var(--accent-700); transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.18); }
 
 /* ===== Sections ===== */
@@ -236,7 +266,7 @@ body{
 /* ใช้ภาพเป็นพื้นหลังจาก inline style (ไม่ต้องมี <img>) */
 .typeHero{
   position:relative;
-  isolation:isolate;                /* สร้าง stacking context ของตัวเอง */
+  isolation:isolate;
   height:420px; overflow:hidden;
   background-size:cover; background-position:center; background-repeat:no-repeat;
 }
@@ -247,7 +277,7 @@ body{
 .typeHeroVeil{
   position:absolute; inset:0;
   background: linear-gradient(180deg,rgba(255, 255, 255, 0.322));
-  z-index:2;                        /* ใต้ title แต่เหนือรูป */
+  z-index:2;
 }
 
 /* ชื่อหน้า */
@@ -262,29 +292,62 @@ body{
 
 /* แผ่นบังชั้นบนสุด (กันลูกศร/ดอททุกชนิดที่ยังทะลุ) */
 .typeHero::after{
-  content:"";
-  position:absolute; inset:0;
-  z-index:2147483647;               /* สูงมาก ๆ */
-  pointer-events:none;              /* ไม่บังการคลิก */
-  background:transparent;           /* มองไม่เห็น (เรามี veil อยู่แล้ว) */
+  content:""; position:absolute; inset:0;
+  z-index:2147483647; pointer-events:none; background:transparent;
 }
 
-/* list การ์ด */
+/* ===== layout การ์ดแบบเดิม (ยังคงไว้เพื่อ backward-compat) ===== */
 .typeRooms{
   display:grid; gap:22px; padding:28px 0 60px;
   grid-template-columns:repeat(2, minmax(0, 1fr));
 }
 @media (max-width:900px){ .typeRooms{ grid-template-columns:1fr; } }
 
-/* ปุ่ม & ลิงก์ในการ์ด */
-.roomActions{ display:flex; align-items:center; gap:14px; margin-top:12px; }
-.priceBtn{
-  background:var(--accent-500); color:#fff; border:1px solid var(--accent-700);
-  padding:10px 14px; border-radius:10px; font-weight:800; cursor:pointer;
+/* ปุ่ม & ลิงก์ในการ์ด (พื้นฐาน) */
+.roomActions{
+  margin-top:14px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
 }
-.priceBtn:hover{ background:var(--accent-700); }
-.detailLink{ color:#6b6b6b; font-weight:700; text-decoration:none; }
-.detailLink:hover{ color:#333; text-decoration:underline; }
+
+/* ปุ่มราคา – ปรับขนาดมาตรฐาน */
+.priceBtn{
+  display:inline-flex; align-items:center; gap:8px;
+  height:40px; min-width:150px;
+  padding:0 14px;
+  border:0; border-radius:12px;
+  background: linear-gradient(180deg, #8FAE62, #6F8C47);
+  color:#fff; font-weight:800; cursor:pointer;
+  box-shadow:0 8px 18px rgba(111,140,71,.28);
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  white-space:nowrap;
+}
+.priceBtn .baht{ opacity:.95; font-weight:900; transform:translateY(-1px); }
+.priceBtn strong{ font-size:18px; letter-spacing:.2px; }
+.priceBtn .per{ opacity:.95; font-size:13px; font-weight:700; }
+.priceBtn:hover{ transform:translateY(-1px); box-shadow:0 12px 24px rgba(111,140,71,.32); filter:saturate(1.05); }
+
+/* ปุ่มรายละเอียด – ปรับให้กว้าง/สูงพอดี */
+.detailBtn{
+  display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+  height:40px; min-width:130px; padding:0 14px 0 16px;
+  border:1px solid var(--line); border-radius:12px; background:#fff; color:#2b2b2b;
+  font-weight:800; text-decoration:none;
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease, color .15s ease;
+}
+.detailBtn:hover{
+  transform:translateY(-1px);
+  border-color:var(--accent-700);
+  color:#111;
+  box-shadow:0 10px 20px rgba(0,0,0,.08);
+}
+.detailBtn svg{ transition: transform .15s ease; }
+.detailBtn:hover svg{ transform: translateX(3px); }
+
+@media (max-width:900px){
+  .roomActions{ gap:10px; }
+  .priceBtn strong{ font-size:17px; }
+}
 
 /* รายการคุณสมบัติเล็ก ๆ */
 .facts{ list-style:none; margin:8px 0 0; padding:0; color:#555; }
@@ -294,6 +357,7 @@ body{
 .typePage .typeHero,
 .typePage .typeRooms { position: relative; }
 
+/* ซ่อนลูกศร/ดอทของ carousel ต่าง ๆ แต่ "ยกเว้น" ทุกอย่างที่อยู่ใน .detailBtn */
 .typePage :is(
   /* react-responsive-carousel */
   .control-arrow, .carousel .control-arrow, .control-prev, .control-next,
@@ -322,7 +386,7 @@ body{
   [class*="prev"],  [class*="Prev"],
   [class*="next"],  [class*="Next"],
   [class*="pager"], [class*="dot"], [class*="bullet"]
-){
+):not(.detailBtn *){
   display:none !important;
   visibility:hidden !important;
   opacity:0 !important;
@@ -346,57 +410,257 @@ body{
   content:none !important;
 }
 
-/* กันกรณีบาง lib ใช้ aria-label/title */
-.typePage :is(
-  [aria-label*="Previous"], [aria-label*="Prev"], [aria-label*="ก่อนหน้า"],
-  [aria-label*="Next"],     [aria-label*="ถัดไป"],
-  [title*="Previous"], [title*="Prev"], [title*="ก่อนหน้า"],
-  [title*="Next"],     [title*="ถัดไป"]
-){
-  display:none !important;
+
+/* ==== ไอคอนรายการคุณสมบัติในการ์ดประเภทห้อง ==== */
+.typeRooms .facts{
+  display:grid; gap:8px;
+}
+.typeRooms .facts li{
+  display:flex; align-items:flex-start; gap:10px;
+  color:#38413a; font-weight:600;
+}
+.typeRooms .facts li::before{
+  content:""; width:18px; height:18px; background:#8FAE62;
+  -webkit-mask:center/contain no-repeat; mask:center/contain no-repeat;
+}
+.typeRooms .facts li:nth-child(1)::before{
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M2 18v-6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v6h-2v-2H4v2H2Zm4-6a2 2 0 0 0-2 2v2h16v-2a2 2 0 0 0-2-2H6Z'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M2 18v-6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v6h-2v-2H4v2H2Zm4-6a2 2 0 0 0-2 2v2h16v-2a2 2 0 0 0-2-2H6Z'/></svg>");
+}
+.typeRooms .facts li:nth-child(2)::before{
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M4 4h6v2H6v4H4V4Zm14 0v6h-2V6h-4V4h6ZM4 20v-6h2v4h4v2H4Zm16-6v6h-6v-2h4v-4h2Z'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M4 4h6v2H6v4H4V4Zm14 0v6h-2V6h-4V4h6ZM4 20v-6h2v4h4v2H4Zm16-6v6h-6v-2h4v-4h2Z'/></svg>");
+}
+.typeRooms .facts li:nth-child(3)::before{
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 5c5.52 0 9.7 3.84 11 7-1.3 3.16-5.48 7-11 7S2.3 15.16 1 12c1.3-3.16 5.48-7 11-7Zm0 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 5c5.52 0 9.7 3.84 11 7-1.3 3.16-5.48 7-11 7S2.3 15.16 1 12c1.3-3.16 5.48-7 11-7Zm0 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z'/></svg>");
+}
+.typeRooms .facts li:nth-child(4)::before{
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 7a3 3 0 0 1 6 0v1h6v2H5V9h6V7a1 1 0 0 0-2 0v1H7V7Zm-2 6h14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3Z'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 7a3 3 0 0 1 6 0v1h6v2H5V9h6V7a1 1 0 0 0-2 0v1H7V7Zm-2 6h14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3Z'/></svg>");
 }
 
-/* ==== ปุ่มราคา/คืน & ปุ่มรายละเอียด (สวยขึ้น) ==== */
-.roomActions{
-  margin-top:14px;
-  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+/* ===== การ์ดสไตล์ “เหมือนห้องจัดเลี้ยง” สำหรับหน้า RoomType (เวอร์ชันใหม่) ===== */
+.typePage .bGrid{
+  display:grid; gap:22px; padding:28px 0 60px;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+}
+@media (max-width:900px){ .typePage .bGrid{ grid-template-columns:1fr; } }
+
+.typePage .bCard{
+  background:#fff; border:1px solid var(--line); border-radius:12px;
+  overflow:hidden; box-shadow:var(--shadow);
+  display:flex; flex-direction:column;
+}
+/* --- ทำให้รูปหน้า RoomType แสดงเหมือน AllRooms (ครอป 4:3 เต็มกรอบ) --- */
+.typePage .bPic{
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.typePage .bPic img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* ปุ่มราคา – โทนเขียว พรีเมียม */
-.priceBtn{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 14px;
-  border:0; border-radius:12px;
-  background: linear-gradient(180deg, #8FAE62, #6F8C47);
-  color:#fff; font-weight:800; cursor:pointer;
-  box-shadow:0 8px 18px rgba(111,140,71,.28);
-  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+/* Fallback: ถ้าหน้า RoomType ไหนยังใช้เลย์เอาต์เก่า (.typeRooms) */
+.typeRooms :is(figure, .roomImg, .roomPic, .pic){
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
-.priceBtn .baht{ opacity:.95; font-weight:900; transform:translateY(-1px); }
-.priceBtn strong{ font-size:18px; letter-spacing:.2px; }
-.priceBtn .per{ opacity:.95; font-size:13px; font-weight:700; }
-.priceBtn:hover{ transform:translateY(-1px); box-shadow:0 12px 24px rgba(111,140,71,.32); filter:saturate(1.05); }
+.typeRooms :is(figure > img, .roomImg img, .roomPic img, .pic img){
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-/* ปุ่มรายละเอียด – ghost/outlined */
-.detailBtn{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 14px; border-radius:12px;
-  border:1px solid var(--line); background:#fff; color:#2b2b2b;
-  font-weight:800; text-decoration:none;
-  box-shadow:0 4px 10px rgba(0,0,0,.05);
-  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease, color .15s ease;
+.typePage .bBody{ padding:14px 16px 16px; }
+.typePage .bTitle{ padding:8px 0 10px; border-bottom:1px solid var(--line); margin-bottom:10px; }
+.typePage .bTitle h3{ margin:0 0 4px; font-size:16px; font-weight:900; color:#222; }
+.typePage .bTitle .en{ color:#777; font-weight:700; }
+.typePage .bFacts{ list-style:none; margin:0; padding:0; display:grid; gap:6px; color:#444; }
+.typePage .bFacts li{ display:flex; gap:10px; align-items:flex-start; }
+.typePage .bFacts .ic{ width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; color:#6f8c47; }
+.typePage .bFacts .ic svg{ width:16px; height:16px; fill:currentColor; }
+.typePage .bActions{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:12px; min-height:44px; }
+@media (max-width:720px){
+  .typePage .bActions{ flex-direction:column; align-items:stretch; gap:10px; }
+  .typePage .bActions .priceBtn,
+  .typePage .bActions .detailBtn{ width:100%; justify-content:center; }
 }
-.detailBtn:hover{
-  transform:translateY(-1px);
-  border-color:var(--accent-700);
-  color:#111;
-  box-shadow:0 10px 20px rgba(0,0,0,.08);
-}
-.detailBtn svg{ transition: transform .15s ease; }
-.detailBtn:hover svg{ transform: translateX(3px); }
 
-/* จอเล็ก */
-@media (max-width:900px){
-  .roomActions{ gap:10px; }
-  .priceBtn strong{ font-size:17px; }
+/* ===== Banquet page ===== */
+.banquetPage .facts li{
+  display:flex; align-items:flex-start; gap:10px;
+}
+.banquetPage .facts li::before{
+  content:""; width:18px; height:18px; background:#6F8C47;
+  -webkit-mask:center/contain no-repeat; mask:center/contain no-repeat;
+}
+/* 1) มีด/ส้อม */
+.banquetPage .facts li:nth-child(1)::before{
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 3v8a2 2 0 0 0 2 2V3h2v10a2 2 0 0 0 2-2V3h2v8a4 4 0 0 1-4 4v6H9v-6a4 4 0 0 1-4-4V3h2Zm10 0h2v18h-2V3Z'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 3v8a2 2 0 0 0 2 2V3h2v10a2 2 0 0 0 2-2V3h2v8a4 4 0 0 1-4 4v6H9v-6a4 4 0 0 1-4-4V3h2Zm10 0h2v18h-2V3Z'/></svg>");
+}
+/* 2) จำนวนคน */
+.banquetPage .facts li:nth-child(2)::before{
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z'/></svg>");
+}
+/* 3) ไมโครโฟน */
+.banquetPage .facts li:nth-child(3)::before{
+  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 14a4 4 0 0 0 4-4V5a4 4 0 0 0-8 0v5a4 4 0 0 0 4 4Zm-1 2.93V19a3 3 0 0 1-3 3H6v-2h2a1 1 0 0 0 1-1v-2.07A7 7 0 0 1 5 10h2a5 5 0 1 0 10 0h2a7 7 0 0 1-8 6.93Z'/></svg>");
+          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 14a4 4 0 0 0 4-4V5a4 4 0 0 0-8 0v5a4 4 0 0 0 4 4Zm-1 2.93V19a3 3 0 0 1-3 3H6v-2h2a1 1 0 0 0 1-1v-2.07A7 7 0 0 1 5 10h2a5 5 0 1 0 10 0h2a7 7 0 0 1-8 6.93Z'/></svg>");
+}
+
+.banquetPage .banquetGrid{
+  display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:28px; padding:32px 0 60px;
+}
+@media (max-width:900px){ .banquetPage .banquetGrid{ grid-template-columns:1fr; } }
+
+.banquetPage .bCard{
+  background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:var(--shadow);
+}
+.banquetPage .bImgWrap img{ width:100%; height:260px; object-fit:cover; display:block; }
+.banquetPage .bBody{ padding:0; }
+.banquetPage .bHead{ padding:14px 16px; background:#f7f8f3; border-bottom:1px solid var(--line); }
+.banquetPage .bTitle{ font-weight:800; color:#222; }
+.banquetPage .bSub{ color:#777; font-size:12px; margin-top:2px; }
+.banquetPage .bFacts{ list-style:none; margin:0; padding:14px 16px 0; display:grid; gap:10px; color:#444; }
+.banquetPage .bFacts li{ display:flex; align-items:center; gap:10px; }
+.banquetPage .bFacts svg{ width:18px; height:18px; fill:#6e7a51; }
+.banquetPage .bActions{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px; padding-top:12px; }
+
+/* ==== บังคับให้ไอคอนลูกศรในปุ่ม "รายละเอียด" แสดงแน่นอน ==== */
+.detailBtn svg,
+.typePage .detailBtn svg,
+.banquetPage .detailBtn svg{
+  display:inline-block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:16px; height:16px;
+  flex:0 0 auto;
+  stroke:currentColor; fill:none; stroke-width:2;
+  vertical-align:middle;
+}
+
+/* ==== ไอคอนรายการคุณสมบัติในหน้า AllRooms (bFacts) ==== */
+.typePage .bFacts{
+  list-style:none; margin:0; padding:14px 0 0;
+  display:grid; gap:10px; color:#444;
+}
+.typePage .bFacts li{
+  display:flex; align-items:flex-start; gap:10px;
+}
+.typePage .bFacts{
+  list-style:none; margin:0; padding:14px 0 0;
+  display:grid; gap:10px; color:#444;
+}
+.typePage .bFacts li{
+  display:flex; align-items:flex-start; gap:10px;
+}
+.typePage .bFacts li::before{
+  content:""; width:18px; height:18px; margin-top:2px;
+  background:transparent;                 /* ← ไม่ใส่สีไว้ที่ฐาน */
+  -webkit-mask:center/contain no-repeat;
+          mask:center/contain no-repeat;
+  flex:0 0 18px;
+}
+/* ใส่สีเฉพาะตอนมีคลาสย่อย */
+.typePage .bFacts--room li::before,
+.typePage .bFacts--banquet li::before{
+  background:#6F8C47;
+}
+
+/* ชุดไอคอน: ห้องพัก */
+.typePage .bFacts--room li:nth-child(1)::before{ -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M2 18v-6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v6h-2v-2H4v2H2Zm4-6a2 2 0 0 0-2 2v2h16v-2a2 2 0 0 0-2-2H6Z'/></svg>"); mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M2 18v-6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v6h-2v-2H4v2H2Zm4-6a2 2 0 0 0-2 2v2h16v-2a2 2 0 0 0-2-2H6Z'/></svg>"); }
+.typePage .bFacts--room li:nth-child(2)::before{ -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M4 4h6v2H6v4H4V4Zm14 0v6h-2V6h-4V4h6ZM4 20v-6h2v4h4v2H4Zm16-6v6h-6v-2h4v-4h2Z'/></svg>"); mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M4 4h6v2H6v4H4V4Zm14 0v6h-2V6h-4V4h6ZM4 20v-6h2v4h4v2H4Zm16-6v6h-6v-2h4v-4h2Z'/></svg>"); }
+.typePage .bFacts--room li:nth-child(3)::before{ -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 5c5.52 0 9.7 3.84 11 7-1.3 3.16-5.48 7-11 7S2.3 15.16 1 12c1.3-3.16 5.48-7 11-7Zm0 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z'/></svg>"); mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 5c5.52 0 9.7 3.84 11 7-1.3 3.16-5.48 7-11 7S2.3 15.16 1 12c1.3-3.16 5.48-7 11-7Zm0 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z'/></svg>"); }
+.typePage .bFacts--room li:nth-child(4)::before{ -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 7a3 3 0 0 1 6 0v1h6v2H5V9h6V7a1 1 0 0 0-2 0v1H7V7Zm-2 6h14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3Z'/></svg>"); mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 7a3 3 0 0 1 6 0v1h6v2H5V9h6V7a1 1 0 0 0-2 0v1H7V7Zm-2 6h14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3Z'/></svg>"); }
+
+/* ชุดไอคอน: ห้องจัดเลี้ยง */
+.typePage .bFacts--banquet li:nth-child(1)::before{ -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 3v8a2 2 0 0 0 2 2V3h2v10a2 2 0 0 0 2-2V3h2v8a4 4 0 0 1-4 4v6H9v-6a4 4 0 0 1-4-4V3h2Zm10 0h2v18h-2V3Z'/></svg>"); mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 3v8a2 2 0 0 0 2 2V3h2v10a2 2 0 0 0 2-2V3h2v8a4 4 0 0 1-4 4v6H9v-6a4 4 0 0 1-4-4V3h2Zm10 0h2v18h-2V3Z'/></svg>"); }
+.typePage .bFacts--banquet li:nth-child(2)::before{ -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z'/></svg>"); mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z'/></svg>"); }
+.typePage .bFacts--banquet li:nth-child(3)::before{ -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 14a4 4 0 0 0 4-4V5a4 4 0 0 0-8 0v5a4 4 0 0 0 4 4Zm-1 2.93V19a3 3 0 0 1-3 3H6v-2h2a1 1 0 0 0 1-1v-2.07A7 7 0 0 1 5 10h2a5 5 0 1 0 10 0h2a7 7 0 0 1-8 6.93Z'/></svg>"); mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 14a4 4 0 0 0 4-4V5a4 4 0 0 0-8 0v5a4 4 0 0 0 4 4Zm-1 2.93V19a3 3 0 0 1-3 3H6v-2h2a1 1 0 0 0 1-1v-2.07A7 7 0 0 1 5 10h2a5 5 0 1 0 10 0h2a7 7 0 0 1-8 6.93Z'/></svg>"); }
+
+/* Banquet page */
+.banquetPage .bFacts{
+  padding-left: 0;
+  margin-left: -8px;        /* ขยับเข้าซ้ายเท่ากันกับฝั่งห้องพัก */
+}
+.banquetPage .bFacts li{
+  gap: 8px;
+}
+.banquetPage .bFacts svg{
+  width: 16px;              /* เล็กลงเล็กน้อยให้ชิดซ้ายขึ้น */
+  height: 16px;
+}
+
+/* ===== ชิดซ้ายเฉพาะหน้า RoomType =====
+   - หน้า AllRooms ต้องมีคลาส .allRoomsPage (มีอยู่แล้ว)
+   - หน้า Banquet มีคลาส .banquetPage */
+.typePage:not(.allRoomsPage):not(.banquetPage) .bFacts,
+.typePage:not(.allRoomsPage):not(.banquetPage) .facts{
+  padding-left: 0;     /* เอาอินเดนท์ออก */
+  margin-left: -25px;  /* ดันทั้งบล็อก (ไอคอน+ข้อความ) ไปทางซ้ายเล็กน้อย */
+}
+
+/* ระยะห่างระหว่างไอคอนกับข้อความ */
+.typePage:not(.allRoomsPage):not(.banquetPage) .bFacts li,
+.typePage:not(.allRoomsPage):not(.banquetPage) .facts li{
+  gap: 8px;
+}
+
+/* ไอคอนให้ยึดชิดซ้ายของบล็อก */
+.typePage:not(.allRoomsPage):not(.banquetPage) .bFacts li::before,
+.typePage:not(.allRoomsPage):not(.banquetPage) .facts li::before{
+  margin-left: 0;
+  flex: 0 0 18px;
+}
+
+
+
+/* === RoomType: รูปให้ชิดขอบการ์ดเท่ากับ AllRooms === */
+
+/* รีเซ็ต margin/padding ของ <figure.bPic> ที่เบราว์เซอร์ใส่มาให้เอง */
+.typePage figure.bPic {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block;
+}
+
+/* เผื่อบางหน้ามี .bPic เป็น div ก็จับรวมไว้ให้ */
+.typePage .bCard .bPic {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block;
+  border-radius: var(--radius) var(--radius) 0 0; /* มุมบนโค้งเท่าการ์ด */
+  overflow: hidden; /* กันรูปล้นมุมโค้ง */
+}
+
+/* รูปภาพให้เต็มความกว้าง และครอป 4:3 เหมือน AllRooms */
+.typePage .bCard .bPic > img,
+.typePage figure.bPic > img {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 3 !important;
+  object-fit: cover !important;
+  display: block;
+  transform: none !important;      /* กันสไตล์อื่นมาดัน */
+  position: static !important;      /* ไม่ให้ absolute ทำให้เกิดระยะว่าง */
+}
+
+/* ให้กรอบการ์ดตัดรูปพอดีขอบ */
+.typePage .bCard {
+  overflow: hidden;
 }

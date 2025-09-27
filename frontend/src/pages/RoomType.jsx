@@ -48,7 +48,6 @@ const TYPES = {
     th: "ประเภทซูพีเรียเตียงใหญ่",
     en: "Superior Double Room",
     hero: SuperiorDoubleHero,
-    // รวมสองหน้ามาอยู่หน้าเดียว
     items: [
       { id: 5, title: "ห้องเลขที่ 5", bed: "เตียง : 1 เตียงใหญ่", area: "ขนาดห้อง: 20 ตารางเมตร", view: "วิว: พื้นที่กลางแจ้ง", bath: "ห้องน้ำ: ห้องน้ำส่วนตัว", price: 450, img: SuperiorDoubleHero },
       { id: 6, title: "ห้องเลขที่ 6", bed: "เตียง : 1 เตียงใหญ่", area: "ขนาดห้อง: 20 ตารางเมตร", view: "วิว: พื้นที่กลางแจ้ง", bath: "ห้องน้ำ: ห้องน้ำส่วนตัว", price: 450, img: SuperiorDoubleHero },
@@ -108,35 +107,51 @@ export default function RoomType() {
           </div>
         </section>
 
-        {/* Rooms list */}
-        <section className="container typeRooms">
+        {/* Rooms list – ใช้การ์ดสไตล์เดียวกับ Banquet */}
+        <section className="container bGrid">
           {data.items.map((r) => (
-            <article className="roomCard hoverPop" key={r.id}>
-              <div className="roomImg">
+            <article className="bCard hoverPop" key={r.id}>
+              <figure className="bPic">
                 <img src={r.img} alt={r.title} />
-              </div>
+              </figure>
 
-              <div className="roomInfo">
-                <h3 className="roomTitle">{r.title}</h3>
-                <ul className="facts">
-                  <li>{r.bed}</li>
-                  <li>{r.area}</li>
-                  <li>{r.view}</li>
-                  <li>{r.bath}</li>
+              <div className="bBody">
+                <div className="bTitle">
+                  <div>
+                    <h3>{r.title}</h3>
+                    <small className="en">{data.en}</small>
+                  </div>
+                </div>
+
+                <ul className="bFacts">
+                  <li>
+                    <span className="ic" aria-hidden><BedIcon /></span>
+                    {r.bed}
+                  </li>
+                  <li>
+                    <span className="ic" aria-hidden><AreaIcon /></span>
+                    {r.area}
+                  </li>
+                  <li>
+                    <span className="ic" aria-hidden><ViewIcon /></span>
+                    {r.view}
+                  </li>
+                  <li>
+                    <span className="ic" aria-hidden><BathIcon /></span>
+                    {r.bath}
+                  </li>
                 </ul>
 
-                <div className="roomActions">
+                <div className="bActions">
                   <button className="priceBtn" type="button">
                     <span className="baht">฿</span>
                     <strong>{r.price.toLocaleString()}</strong>
-                    <span className="per">บาท/คืน</span>
+                    <span className="per">บาท / คืน</span>
                   </button>
 
-                  <a className="detailBtn" href="#">
-                    <span>รายละเอียด</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <path d="M8 5l8 7-8 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                  <a className="detailBtn" href="#" onClick={(e) => e.preventDefault()}>
+                    รายละเอียด
+                    <span className="go"><ArrowRightIcon /></span>
                   </a>
                 </div>
               </div>
@@ -144,7 +159,7 @@ export default function RoomType() {
           ))}
         </section>
 
-        {/* Footer */}
+        {/* Footer (เหมือนเดิม) */}
         <section className="contact">
           <div className="container">
             <h3 className="contactTitle">ติดต่อเรา</h3>
@@ -171,4 +186,21 @@ export default function RoomType() {
       </main>
     </>
   );
+}
+
+/* ===== ไอคอนเล็ก ๆ ที่ใช้ในรายการ ===== */
+function BedIcon(){
+  return (<svg viewBox="0 0 24 24"><path d="M2 18v-6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v6h-2v-2H4v2H2Zm2-4h12v-2a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2Z"/></svg>);
+}
+function AreaIcon(){
+  return (<svg viewBox="0 0 24 24"><path d="M3 3h18v18H3V3Zm2 2v14h14V5H5Z"/></svg>);
+}
+function ViewIcon(){
+  return (<svg viewBox="0 0 24 24"><path d="M12 5c5.52 0 9.7 3.84 11 7-1.3 3.16-5.48 7-11 7S2.3 15.16 1 12c1.3-3.16 5.48-7 11-7Zm0 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z"/></svg>);
+}
+function BathIcon(){
+  return (<svg viewBox="0 0 24 24"><path d="M7 3a3 3 0 0 0-3 3v7H3v4a3 3 0 0 0 3 3h12v-2H6a1 1 0 0 1-1-1v-3h14v-2H6V6a1 1 0 0 1 1-1h4V3H7Z"/></svg>);
+}
+function ArrowRightIcon(){
+  return (<svg viewBox="0 0 24 24"><path d="M8 5l8 7-8 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>);
 }
